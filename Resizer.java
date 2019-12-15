@@ -27,6 +27,7 @@ public class Resizer {
 		// リサイズ
 		String s1 = "=";
 		int i = 0;
+		int x = 0;
 		double d = 0;
 		String p = ""; // パーセント
 		int p_cnt = 0; // パーセント記号表示個数
@@ -51,10 +52,37 @@ public class Resizer {
 					}
 				}
 				buf.append("|");
-				buf.append(Integer.toString(i));
 				if (i == file_cnt) {
+					buf.append("   ");
+					buf.append(Integer.toString(i));
 					buf.append("\n");
 				} else {
+					x++;
+					switch(x) {
+					case 1:
+						buf.append(" / ");
+						break;
+					case 2:
+						buf.append(" | ");
+						break;
+					case 3:
+						buf.append(" \\ ");
+						break;
+					case 4:
+						buf.append(" - ");
+						break;
+					case 5:
+						buf.append(" | ");
+						break;
+					case 6:
+						buf.append(" \\ ");
+						break;
+					case 7:
+						buf.append(" - ");
+						x = 0;
+						break;
+					}
+					buf.append(Integer.toString(i));
 					buf.append("\r");
 				}
 				System.out.print(buf.toString());
