@@ -1,52 +1,80 @@
+import java.io.File;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 import tools.GetCurrentJpegFile;
 import tools.ResizeImage;
-import java.io.File;
-import java.util.List;
-import java.util.ArrayList;
-import java.io.IOException;
 
 public class Resizer {
 
 	public static void main(String[] args) {
 		// Resize the image file in the current directory.
 
-		System.out.println("--------------------");
-		System.out.println("Start");
-		System.out.println("--------------------");
+		System.out.println("Reduce the file size.");
 
 		List<File> list = new ArrayList<>();
 		// List<File> list_aft = new ArrayList<>();
-
+		
 		GetCurrentJpegFile f = new GetCurrentJpegFile();
 		list = f.execute();
+
+		// k¬‘ÎÛ‚Ìƒtƒ@ƒCƒ‹”
+		int file_cnt = list.size();
+
 		ResizeImage r = new ResizeImage();
 
-		// ãƒªã‚µã‚¤ã‚º
+		// ƒŠƒTƒCƒY
+		String s1 = "=";
+		int i = 0;
+		double d = 0;
+		String p = ""; // ƒp[ƒZƒ“ƒg
+		int p_cnt = 0; // ƒp[ƒZƒ“ƒg‹L†•\¦ŒÂ”
 		for (File file : list) {
+			i++;
 			try {
-				System.out.println("\n" + file + ":" + String.format("%.4f", (file.length() / 1024.0 / 1024.0)) + "MB");
+//				System.out.println("\n" + file + ":" + String.format("%.4f", (file.length() / 1024.0 / 1024.0)) + "MB");
 				File file_aft = r.execute(file);
-				System.out.println(" â†’ " + file_aft + ":" + String.format("%.4f", (file_aft.length() / 1024.0 / 1024.0)) + "MB");
-
+				//				System.out.println(" ¨ " + file_aft + ":" + String.format("%.4f", (file_aft.length() / 1024.0 / 1024.0)) + "MB");
+				d = (double)i/file_cnt;
+				p = String.format("%.2f", d * 100);
+				p_cnt = (int)(d * 100) / 10;
+				p_cnt *= 2; // 100%‚Å20ŒÂ•\¦
+				StringBuffer buf = new StringBuffer();
+				buf.append(p);
+				buf.append("% |");
+				for (int j = 0; j < 20; j++) {
+					if (j < p_cnt) {
+						buf.append("=");
+					} else {
+						buf.append(" ");
+					}
+				}
+				buf.append("|");
+				buf.append(Integer.toString(i));
+				if (i == file_cnt) {
+					buf.append("\n");
+				} else {
+					buf.append("\r");
+				}
+				System.out.print(buf.toString());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}
 
-		// ä½œæˆãƒªã‚¹ãƒˆ
+		// ì¬ƒŠƒXƒg
 
-		// å‰Šé™¤
+		// íœ
 		if (args.length == 1){
 			if (args[0].equals("d")) {
 				for (File file : list) {
 					file.delete();
 				}
-				System.out.println("\n**The original files has been deleted.**");
+				System.out.println("\nThe original files has been deleted.");
 			}
 		}
 
-		System.out.println("--------------------");
-		System.out.println("End");
-		System.out.println("--------------------");
+		System.out.println("Done.");
 	}
 }
