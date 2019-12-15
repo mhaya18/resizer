@@ -37,7 +37,7 @@ public class Resizer {
 				File file_aft = r.execute(file);
 				//				System.out.println(" Å® " + file_aft + ":" + String.format("%.4f", (file_aft.length() / 1024.0 / 1024.0)) + "MB");
 				d = (double)i/file_cnt;
-				p = String.format("%.2f", d * 100);
+				p = String.format("%6.2f", d * 100);
 				p_cnt = (int)(d * 100) / 10;
 				p_cnt *= 2; // 100%Ç≈20å¬ï\é¶
 				StringBuffer buf = new StringBuffer();
@@ -58,6 +58,7 @@ public class Resizer {
 					buf.append("\r");
 				}
 				System.out.print(buf.toString());
+
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
